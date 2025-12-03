@@ -1,0 +1,22 @@
+name: Telegram Notification on Config Push
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram notification
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ✅ به‌روزرسانی کانفیگ جدید!
+            
+            👤 کامیت توسط: ${{ github.actor }}
+            📝 پیام کامیت: ${{ github.event.head_commit.message }}
+            🔗 لینک مخزن: ${{ github.event.repository.html_url }}
